@@ -45,3 +45,5 @@ Finally, you open one more terminal, and publish topic manually.
 $ rostopic pub /team std_msgs/String "data: '{TEAM_NAME}'"
 ```
 
+
+If you have any questions, please contact to TAs or use repository issue.
