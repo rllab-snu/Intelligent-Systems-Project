@@ -1,0 +1,14 @@
+asgiref==3.4.1
+certifi==2020.12.5
+Django==3.2.9
+image==1.5.33
+numpy==1.19.5
+opencv-python==4.2.0.34
+Pillow==8.4.0
+PyQt5==5.15.6
+PyQt5-Qt5==5.15.2
+PyQt5-sip==12.9.0
+pytz==2021.3
+six==1.16.0
+sqlparse==0.4.2
+typing-extensions==3.10.0.2
