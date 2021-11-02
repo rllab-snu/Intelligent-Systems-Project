@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="world_name" value="$(find sim2real)/worlds/eval.world"/>
+    <arg name="racecar_x" default="-3.5" />
+    <arg name="racecar_y" default="12.0" />
+    <arg name="racecar_yaw" default="0.0" />
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(arg world_name)"/>
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="true"/>
+        <arg name="headless" value="false"/>
+        <arg name="debug" value="false"/>
+    </include>
+
+    <!-- load RC car kinematics & dynamics value -->
+    <rosparam file="$(find sim2real)/config/racecar.yaml" command="load" />
+
+    <!-- urdf xml robot description loaded on the Parameter Server, converting the xacro into a proper urdf file-->
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find racecar_description)/urdf/racecar.xacro'" />
+ 
+    <!-- push robot_description to factory and spawn robot in gazebo -->
+    <param name="/racecar/init_x" type="double" value="$(arg racecar_x)" />
+    <param name="/racecar/init_y" type="double" value="$(arg racecar_y)" />
+    <param name="/racecar/init_yaw" type="double" value="$(arg racecar_yaw)" />
+    <node name="racecar_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model racecar -x $(arg racecar_x) -y $(arg racecar_y) -z 0.05 -Y $(arg racecar_yaw)" />
+
+    <!-- ros_control racecar launch file -->
+    <include file="$(find racecar_control)/launch/racecar_control.launch" ns="/" />
+    <node name="racecar_dynamics" pkg="sim2real" type="racecar_simul_dynamics.py" ns="/racecar" />
+
+    <!-- use simul time -->
+    <param name="/use_sim_time" value="true"/>
+
+</launch>

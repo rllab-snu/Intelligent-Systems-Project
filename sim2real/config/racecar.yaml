@@ -1,0 +1,13 @@
+racecar:
+  dynamics:
+    tau_steer: 0.4544
+    tau_motor: 1.8426
+    scale_steer: -0.459
+
+  kinematics:
+    body_length: 0.918352
+    camera_pos: 0.29
+    lidar_pos: 0.47765
+    body_width: 0.5
+    wheel_radius: 0.05
+    gear_ratio: 5.5427

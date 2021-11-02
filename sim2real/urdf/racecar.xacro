@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<robot name="racecar_marker" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find sim2real)/urdf/macros.xacro" />
+  <xacro:include filename="$(find sim2real)/urdf/materials.xacro" />
+  <gazebo reference="base_link">
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+
+  <xacro:property name="yaml_file" value="$(find sim2real)/config/racecar.yaml" />
+  <xacro:property name="props" value="${load_yaml(yaml_file)}"/>
+  <xacro:property name="body_length" value="${props['racecar']['kinematics']['body_length']}" />
+  <xacro:property name="body_width" value="${props['racecar']['kinematics']['body_width']}" />
+  <xacro:property name="lidar_pos" value="${props['racecar']['kinematics']['lidar_pos']}" />
+  <xacro:property name="camera_pos" value="${props['racecar']['kinematics']['camera_pos']}" />
+
+  <!-- Add chassis and it's inertia link -->
+
+  <link name="base_link" />
+
+  <link name="chassis">
+    <visual>
+      <!--<xacro:chassis_geometry/>-->
+      <origin xyz="${body_length*0.8*0.5} 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${body_length*0.8} ${body_width * 0.7} 0.05"/>
+      </geometry>
+      <material name="blue" />
+    </visual>
+  </link>
+
+  <joint name="base_link_joint" type="fixed">
+    <origin xyz="0 0 0.05" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="chassis" />
+  </joint>
+
+  <link name="chassis_inertia">
+    <inertial>
+      <xacro:chassis_inertial_params />
+    </inertial>
+  </link>
+
+  <joint name="chassis_inertia_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="chassis" />
+    <child link="chassis_inertia" />
+  </joint>
+
+  <!-- Add the left rear wheel with its joints and tranmissions -->
+
+  <link name="left_rear_wheel">
+    <inertial>
+      <xacro:left_wheels_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:left_rear_wheel_geometry />
+      <material name="black" />
+    </visual>
+  </link>
+
+  <joint name="left_rear_wheel_joint" type="fixed">
+    <origin xyz="0 ${body_width * 0.5 - 0.0225} 0" rpy="1.5708 0 0" />
+    <parent link="chassis" />
+    <child link="left_rear_wheel" />
+    <axis xyz="0 0 -1" />
+  </joint>
+
+  <!-- Add the right rear wheel with its joints and tranmissions -->
+
+  <link name="right_rear_wheel">
+    <inertial>
+      <xacro:right_wheels_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:right_rear_wheel_geometry />
+      <material name="black" />
+    </visual>
+  </link>
+
+  <joint name="right_rear_wheel_joint" type="fixed">
+    <origin xyz="0 ${body_width * -0.5 + 0.0225} 0" rpy="1.5708 0 0" />
+    <parent link="chassis" />
+    <child link="right_rear_wheel" />
+    <axis xyz="0 0 -1" />
+  </joint>
+
+  <!-- Add the left steering hinge with its joints and tranmissions -->
+
+  <link name="left_steering_hinge">
+    <inertial>
+      <xacro:steering_hinge_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:left_steering_hinge_geometry />
+      <material name="grey" />
+    </visual>
+  </link>
+
+  <joint name="left_steering_hinge_joint" type="fixed">
+    <origin xyz="${body_length} ${body_width * 0.5} 0" rpy="0 1.5708 0" />
+    <parent link="chassis" />
+    <child link="left_steering_hinge" />
+    <axis xyz="-1 0 0" />
+  </joint>
+
+  <!-- Add the right steering hinge with its joints and tranmissions -->
+
+  <link name="right_steering_hinge">
+    <inertial>
+      <xacro:steering_hinge_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:right_steering_hinge_geometry />
+      <material name="grey" />
+    </visual>
+  </link>
+
+  <joint name="right_steering_hinge_joint" type="fixed">
+    <origin xyz="${body_length} ${body_width * -0.5} 0" rpy="0 1.5708 0" />
+    <parent link="chassis" />
+    <child link="right_steering_hinge" />
+    <axis xyz="-1 0 0" />
+  </joint>
+
+  <!-- Add the left front wheel with its joints and tranmissions -->
+
+  <link name="left_front_wheel">
+    <inertial>
+      <xacro:left_wheels_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:left_front_wheel_geometry />
+      <material name="black" />
+    </visual>
+  </link>
+
+  <joint name="left_front_wheel_joint" type="fixed">
+    <!--<origin xyz="0 0 0" rpy="1.5708 0 0" />-->
+    <origin xyz="0 -0.0225 0" rpy="1.5708 0 0" />
+    <parent link="left_steering_hinge" />
+    <child link="left_front_wheel" />
+    <axis xyz="0 0 -1" />
+  </joint>
+
+  <!-- Add the left front wheel with its joints and tranmissions -->
+
+  <link name="right_front_wheel">
+    <inertial>
+      <xacro:right_wheels_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:right_front_wheel_geometry />
+      <material name="black" />
+    </visual>
+  </link>
+
+  <joint name="right_front_wheel_joint" type="fixed">
+    <!--<origin xyz="0 0 0" rpy="1.5708 0 0" />-->
+    <origin xyz="0 0.0225 0" rpy="1.5708 0 0" />
+    <parent link="right_steering_hinge" />
+    <child link="right_front_wheel" />
+    <axis xyz="0 0 -1" />
+  </joint>
+  
+</robot>

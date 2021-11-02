@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="racecar_x" value="1.1404027" />
+    <arg name="racecar_y" value="-1.2659457" />
+    <arg name="racecar_yaw" default="-2.0674796"/>
+    <include file="$(find sim2real)/launch/base.launch">
+        <arg name="world_name" default="default.world"/>
+        <arg name="racecar_x" value="$(arg racecar_x)"/>
+        <arg name="racecar_y" value="$(arg racecar_y)"/>
+        <arg name="racecar_yaw" value="$(arg racecar_yaw)"/>
+    </include>
+
+    <!-- urdf xml robot description loaded on the Parameter Server, converting the xacro into a proper urdf file-->
+    <param name="robot_description2" command="$(find xacro)/xacro '$(find sim2real)/urdf/racecar.xacro'" />
+    <node name="racecar_marker" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description2 -model racecar_marker -x $(arg racecar_x) -y $(arg racecar_y) -z 0.05 -Y $(arg racecar_yaw) -Y $(arg racecar_yaw)" />
+
+</launch>
