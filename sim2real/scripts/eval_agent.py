@@ -1,4 +1,6 @@
 #!/usr/bin/env python2
+import os
+import subprocess
 import rospy
 import rospkg
 
@@ -24,16 +26,14 @@ class EvalAgent:
         rospy.init_node('evaluation_agent', anonymous=True)
         # load world info
         self.world_info_path = project_path + "/worlds/" + args['world_name'] + ".json"
-        
-        # world info is a list of world
-        # each world is formatted {'name': {world_name}, 'offset': ['x', 'y']}
         with open(self.world_info_path, "r") as world_info:
             self.world_info = json.load(world_info)
-        
+        # world info is a list of world
+        # each world is formatted {'name': {world_name}, 'offset': ['x', 'y']}
 
         self.init_time = time.time()
         self.n_track = len(self.world_info)
-        self.n_trial = 1
+        self.n_trial = 3
         self.n_query = 0
         self.n_finish = 0
         self.n_wait = 0
@@ -49,6 +49,7 @@ class EvalAgent:
         self.query_pub = rospy.Publisher("/query", Query, queue_size = 1)
 
         curses.wrapper(self.eval)
+        # self.eval()
 
 
     def callback_team(self, data):
@@ -68,6 +69,14 @@ class EvalAgent:
         return
 
     def callback_result(self, data):
+        # summary result
+        # print("==============SUMMARY==============")
+        # if data.success:
+        #     print("[SUCCESS]")
+        # else :
+        #     print("[FAIL]")
+        # print("[%04d, %d / %d] %s, %s" %(data.id, data.trial, self.n_trial, data.team, data.world))
+        # print("===================================")
         self.query_database[data.id]['count'] += 1
         if self.query_database[data.id]['count'] == self.n_track * self.n_trial:
             self.query_database[data.id]['status'] = 'FINISH'
@@ -132,6 +141,8 @@ class EvalAgent:
                 rt.world = self.query_queue[0]['world']
                 rt.exit = self.query_queue[0]['exit']
                 if self.query_database[rt.id]['status'] == 'WAIT':
+                    subprocess.Popen("rosrun sim2real " + rt.name + "_project1.py > /dev/null 2>&1", shell = True)
+                    time.sleep(5.0)
                     self.query_database[rt.id]['status'] = 'RUNNING'
                     self.n_wait -= 1
                     self.n_running += 1
