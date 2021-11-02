@@ -36,7 +36,7 @@ class PurePursuit:
         self.env.unwrapped
         self.env.load(args['world_name'])
         self.track_list = self.env.track_list
-        self.time_limit = 10.0
+        self.time_limit = 100.0
 
         ######################################## YOU CAN ONLY CHANGE THIS PART ########################################
         # TO DO
@@ -120,7 +120,7 @@ class PurePursuit:
                 """
                 
                 input_steering = 0.0
-                input_vel = 1.0
+                input_vel = 0.0
                 _, _, done, logs = self.env.step([input_steering, input_vel])
                 ######################################## YOU CAN ONLY CHANGE THIS PART ########################################
 
