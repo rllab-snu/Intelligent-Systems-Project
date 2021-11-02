@@ -36,7 +36,7 @@ class PurePursuit:
         self.env.unwrapped
         self.env.load(args['world_name'])
         self.track_list = self.env.track_list
-        self.time_limit = 100.0
+        self.time_limit = 10.0
 
         ######################################## YOU CAN ONLY CHANGE THIS PART ########################################
         # TO DO
@@ -99,7 +99,7 @@ class PurePursuit:
                     rt.team = data.name
                     rt.world = data.world
                     rt.elapsed_time = END_TIME - START_TIME
-                    rt.waypoints = self.env.next_checkpoints
+                    rt.waypoints = self.env.next_checkpoint
                     rt.n_waypoints = 20
                     rt.success = False
                     rt.fail_type = "Exceed Time Limit"
@@ -120,9 +120,8 @@ class PurePursuit:
                 """
                 
                 input_steering = 0.0
-                input_vel = 0.0
+                input_vel = 1.0
                 _, _, done, logs = self.env.step([input_steering, input_vel])
-
                 ######################################## YOU CAN ONLY CHANGE THIS PART ########################################
 
 
@@ -137,7 +136,6 @@ class PurePursuit:
                     rt.n_waypoints = 20
                     rt.success = True if logs['info'] == 3 else False
                     rt.fail_type = ""
-                    print(logs)
                     if logs['info'] == 1:
                         rt.fail_type = "Collision"
                     if logs['info'] == 2:
