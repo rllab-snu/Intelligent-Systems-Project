@@ -92,13 +92,12 @@ class Env(gym.Env):
     for t in range(self.n_tracks):
       name = self.track_list[t]
       offset = self.offset_list[t]
-      file_path = project_path + "/worlds/waypoints/" + name + ".txt"
+      file_path = project_path + "/worlds/waypoints_augemented/" + name + "_aug_waypoints.txt"
       lines = []
       with open(file_path, "r") as f:
           for line in f:
               lines.append(line.split())
       N = len(lines)
-      print("# of waypoints in %s: %d" %(name, N))
       waypoints = []
       for i in range(N):
           waypoints.append(np.array([offset[0] + float(lines[i][0]), offset[1] + float(lines[i][1])]))
@@ -145,7 +144,6 @@ class Env(gym.Env):
     self.next_checkpoint = 0
     time.sleep(0.1)
     self.rate.sleep()
-    print('\nreset environment')
     valid = False
     self.track_id = -1
     for i in range(self.n_tracks):
@@ -162,7 +160,6 @@ class Env(gym.Env):
     self.init_state.pose.orientation.y = self.init_quat[1]
     self.init_state.pose.orientation.z = self.init_quat[2]
     self.init_state.pose.orientation.w = self.init_quat[3]
-    print(self.offset_list[self.track_id])
     self.init_pub.publish(self.init_state)
     time.sleep(1)
     self.rate.sleep()
