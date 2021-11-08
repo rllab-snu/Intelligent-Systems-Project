@@ -35,7 +35,7 @@ class Env(gym.Env):
     self.angle_range = np.arange(40, 1080, 40) # -135 degree to 135 degree per 10 degrees    
     self.rate = rospy.Rate(10) #unit : hz
     self.arrive_distance = 2.0
-    self.limit_distance = 0.3
+    self.limit_distance = 0.5
     self.max_step = 10000
     self.cur_step = 0
     self.idx = 0
