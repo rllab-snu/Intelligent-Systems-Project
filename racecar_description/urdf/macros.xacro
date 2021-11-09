@@ -116,12 +116,12 @@
   <transmission name="${name}_transmission" type="SimpleTransmission">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="${name}_joint">
-      <!--<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>-->
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <!--<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>-->
     </joint>
     <actuator name="${name}_motor">
-      <!--<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>-->
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <!--<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>-->
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
@@ -131,12 +131,12 @@
   <transmission name="${name}_transmission" type="SimpleTransmission">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="${name}_joint">
-      <!--<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>-->
-      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <!--<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>-->
     </joint>
     <actuator name="${name}_motor">
-      <!--<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>-->
-      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <!--<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>-->
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
