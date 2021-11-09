@@ -92,7 +92,7 @@ class Env(gym.Env):
     for t in range(self.n_tracks):
       name = self.track_list[t]
       offset = self.offset_list[t]
-      file_path = project_path + "/worlds/waypoints_augemented/" + name + "_aug_waypoints.txt"
+      file_path = project_path + "/worlds/waypoints_augmented/" + name + "_aug_waypoints.txt"
       lines = []
       with open(file_path, "r") as f:
           for line in f:
