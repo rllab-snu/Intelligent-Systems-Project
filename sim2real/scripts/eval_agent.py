@@ -141,7 +141,7 @@ class EvalAgent:
                 rt.world = self.query_queue[0]['world']
                 rt.exit = self.query_queue[0]['exit']
                 if self.query_database[rt.id]['status'] == 'WAIT':
-                    subprocess.Popen("rosrun sim2real " + rt.name + "_project1.py > /dev/null 2>&1", shell = True)
+                    subprocess.Popen("rosrun sim2real " + rt.name + "_project2.py > /dev/null 2>&1", shell = True)
                     time.sleep(5.0)
                     self.query_database[rt.id]['status'] = 'RUNNING'
                     self.n_wait -= 1

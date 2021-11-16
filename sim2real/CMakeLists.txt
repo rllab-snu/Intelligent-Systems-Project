@@ -8,6 +8,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 set(TEAM_NAME "RLLAB")
 
+
 find_package(catkin REQUIRED COMPONENTS
   std_msgs
   ackermann_msgs
@@ -35,6 +36,7 @@ include_directories(
 
 catkin_install_python(PROGRAMS
   project/IS_${TEAM_NAME}/project/${TEAM_NAME}_project1.py
+  project/IS_${TEAM_NAME}/project/${TEAM_NAME}_project2.py
   scripts/eval_agent.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
