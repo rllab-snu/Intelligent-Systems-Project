@@ -40,7 +40,6 @@ class Env(gym.Env):
     self.cur_step = 0
     self.idx = 0
     # state & action
-    # self.sensor_value = np.zeros_like(self.angle_range, dtype=np.float32)
     self.sensor_value = np.zeros(1081, dtype = np.float32)
     self.rpm_data = 0.0
     self.steering = 0.0
@@ -120,7 +119,7 @@ class Env(gym.Env):
                   'range_min':data.range_min, 'range_max':data.range_max}
     '''
     for i in range(1081):
-      self.sensor_value[i] = np.clip(data.ranges[i], 0.0, 10.0)
+      self.sensor_value[i] = data.ranges[i]
 
   def rpm_callback(self, data):
     self.rpm_data = data.data
@@ -224,7 +223,7 @@ class Env(gym.Env):
     return state, reward, done, logs
 
   def get_state(self):
-    state = np.concatenate([self.sensor_value/10.0, [self.rpm_data/100.0], [self.steering]])
+    state = np.concatenate([self.sensor_value, [self.rpm_data/100.0], [self.steering]])
     return state
 
   def get_pose(self):
