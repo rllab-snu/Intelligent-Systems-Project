@@ -16,9 +16,7 @@ sys.path.append(PATH)
 import gym
 import env
 import numpy as np
-import torch
 from collections import deque
-import matplotlib.pyplot as plt
 import json
 import random
 import math
@@ -136,7 +134,7 @@ class GaussianProcess:
                     rt.team = data.name
                     rt.world = data.world
                     rt.elapsed_time = END_TIME - START_TIME
-                    rt.waypoints = self.env.next_checkpoints
+                    rt.waypoints = self.env.next_checkpoint
                     rt.n_waypoints = 20
                     rt.success = False
                     rt.fail_type = "Exceed Time Limit"
@@ -145,8 +143,8 @@ class GaussianProcess:
                     break
                 
                 act = self.get_action(obs)
-                input_steering = np.clip(act[0][0], -self.MaxAng, self.MaxANg)
-                input_velocity = np.clip(act[0][1], self.MinVel, self.MaxVel)
+                input_steering = np.clip(act[0][0], -self.maxAng, self.maxAng)
+                input_velocity = np.clip(act[0][1], self.minVel, self.maxVel)
                 obs, _, done, logs = self.env.step([input_steering, input_velocity])
                 obs = np.reshape(obs, [1,-1])
                 
