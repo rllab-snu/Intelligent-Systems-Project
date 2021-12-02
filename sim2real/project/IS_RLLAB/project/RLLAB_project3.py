@@ -61,7 +61,7 @@ class Agent:
         Set some class variables and action parameters.
         Also, initialize some functions before start if you need.
         if you trained model with some learning-based methods like as gaussian process regression or deep learning,
-        please load the pretrained model in this part when you submit the final version!! (TRAINING AGAIN IS NOT ALLOWED)
+        please load the pretrained model in this part when you submit the final version!! (TRAINING IN TA'S COMPUTER IS NOT ALLOWED)
         Also, check your git repository again on github website for correctness of your model file push history.
         """
         # Please make sure that your action values are within the following range
