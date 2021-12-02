@@ -37,6 +37,7 @@ include_directories(
 catkin_install_python(PROGRAMS
   project/IS_${TEAM_NAME}/project/${TEAM_NAME}_project1.py
   project/IS_${TEAM_NAME}/project/${TEAM_NAME}_project2.py
+  project/IS_${TEAM_NAME}/project/${TEAM_NAME}_project3.py
   scripts/eval_agent.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
