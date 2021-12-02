@@ -26,14 +26,14 @@ from sim2real.msg import Result, Query
 from joblib import dump, load
 
 
-# please using sklearn for gaussian process
-# please using tensorflow1 for implementing deep learning architecture
+# please use sklearn for gaussian process regression
+# please use tensorflow-v1 for implementing deep learning architecture (1.9.0 or 1.14.0 version is recommended)
 # torch and different version tensorflow are not allowed.
 from sklearn.utils import shuffle
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, ConstantKernel as C
 import tensorflow as tf
-print(tf.__version__) # 1.9.0 -> if error occurs, $ pip2 install protobuf==3.7
+print(tf.__version__) # the version should be 1.14.0 if tensorflow is not installed, try sudo pip2 install tensorflow==1.14.0
 
 
 project_path = rospkg.RosPack().get_path("sim2real")
@@ -60,11 +60,11 @@ class Agent:
         """
         Set some class variables and action parameters.
         Also, initialize some functions before start if you need.
-        if you trained model using some learning-based methods like as gaussian process or deep learning,
-        please load the pretrained model in this part!!
-        Also, check again your git repository on github website for correctness of your model file push history.
+        if you trained model with some learning-based methods like as gaussian process regression or deep learning,
+        please load the pretrained model in this part when you submit the final version!! (TRAINING AGAIN IS NOT ALLOWED)
+        Also, check your git repository again on github website for correctness of your model file push history.
         """
-        # Please satisfying your clipped velocity and angular velocity
+        # Please make sure that your action values are within the following range
         # 1.5 <= minVel <= maxVel <= 3.0
         # 0.0 <= maxAng <= 1.5
         self.maxAng = 1.0
@@ -81,8 +81,8 @@ class Agent:
     def get_action(self, obs):
         """
         1) input observation is the raw data from environment.
-        2) 0 to 1080 components (totally 1081) are from lidar.
-           Also, 1081 component and 1082 component are scaled velocity and steering angle, respectively.
+        2) elements 0 through 1080(totally 1081) are from lidar.
+           also, the 1081th  element and 1082th element are the scaled velocity and steering angle, respectively.
         3) calculate appropriate actions using your method.
         """
 
