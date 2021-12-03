@@ -52,7 +52,7 @@ class Agent:
         self.env.load(args['world_name'])
         self.track_list = self.env.track_list
         
-        self.time_limit = 100.0
+        self.time_limit = 150.0
         
         ########################
         # PLEASE READ COMMENTS #
